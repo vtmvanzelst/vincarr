@@ -24,17 +24,6 @@
             attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
         }).addTo(map);
 
-        var precipitation = new L.tileLayer.wms("https://mesonet.agron.iastate.edu/cgi-bin/wms/us/mrms_nn.cgi?", {
-            layers:'mrms_p24h',
-            format:'image/png',
-            transparent:true
-        })
-        
-        //layer control
-        var overlayMaps = {
-            "Precipitation":precipitation};
-        L.control.layers(overlayMaps).addTo(map);
-
         L.Control.Watermark=L.Control.extend({
             onAdd:function(map){
                 var img = L.DomUtil.create('img');
