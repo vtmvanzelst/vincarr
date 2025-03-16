@@ -97,6 +97,15 @@
             transparent: true
         });
 
+
+        var tidalmarsh = new L.tileLayer.wms("https://nl2120.openearth.nl/geoserver/landscape/wms", {
+            layers: 'landscape:tidal_marsh',
+            format: 'image/png',
+            version: '1.1.0',
+            transparent: true
+        });
+
+
         // VINCARR layers
         // RP0100
         // no veg depth
@@ -120,6 +129,21 @@
             version: '1.1.0',
             transparent: true
         });        
+
+
+        var inun_dif_extent_rp0100 = new L.tileLayer.wms("https://nl2120.openearth.nl/geoserver/vincarr/wms", {
+            layers: '05_inundation_depth_dif_extent',
+            format: 'image/png',
+            version: '1.1.0',
+            transparent: true
+        }); 
+
+
+
+
+        
+
+
 
         var baseTree = {
             label: 'BaseLayers',
@@ -153,6 +177,7 @@
                     label: "<span style='font-size: 14px;'><b>Coastal Wetland cover</b></span>",
                     children: [
                         // {label: "<span style='font-size: 12px;'>Precipitation</span>", layer: precipitation},
+                        {label: "<span style='font-size: 12px;'>Tidal marshes</span>", layer: tidalmarsh},
                         {label: "<span style='font-size: 12px;'>Mangroves</span>", layer: gmw2020},
                     ]
                 },
@@ -161,7 +186,8 @@
                     children: [
                         {label: "<span style='font-size: 12px;'>Flood depth (noveg)</span>", layer: inun_noveg_rp0100},
                         {label: "<span style='font-size: 12px;'>Flood depth (veg)</span>", layer: inun_veg_rp0100},
-                        {label: "<span style='font-size: 12px;'>Flood depth difference</span>", layer: inun_dif_rp0100}
+                        {label: "<span style='font-size: 12px;'>Flood depth difference</span>", layer: inun_dif_rp0100},
+                        {label: "<span style='font-size: 12px;'>Flood extent difference</span>", layer: inun_dif_extent_rp0100}
                     ]
                 }
             ]
@@ -173,6 +199,7 @@
     
 
         // Initial layer setup: Add layers to map initially (for testing or default visibility)
+        tidalmarsh.addTo(map);
         gmw2020.addTo(map); // This will add the precipitation layer by default
         inun_noveg_rp0100.addTo(map);
 
@@ -203,9 +230,18 @@
         var mangrovesLegend = L.control({ position: 'bottomright' });
         mangrovesLegend.onAdd = function (map) {
             var div = L.DomUtil.create('div', 'info legend');
-            div.innerHTML = '<div><div class="legend-color-box" style="background-color: #00e000;"></div> Mangroves</div>';
+            div.innerHTML = '<div><div class="legend-color-box" style="background-color: #00e000;"></div> Mangroves (Bunting et al., 2022)</div>';
             return div;
         };
+
+        var tidalmarshLegend = L.control({ position: 'bottomright' });
+        tidalmarshLegend.onAdd = function (map) {
+            var div = L.DomUtil.create('div', 'info legend');
+            div.innerHTML = '<div><div class="legend-color-box" style="background-color: #e9e501;"></div> Tidal marshes (Worthington et al., 2024)</div>';
+            return div;
+        };
+
+
 
         var inunNovegLegend = L.control({ position: 'bottomright' });
         inunNovegLegend.onAdd = function (map) {
@@ -228,10 +264,19 @@
             return div;
         };
 
+        var inundifextentLegend = L.control({ position: 'bottomright' });
+        inundifextentLegend.onAdd = function (map) {
+            var div = L.DomUtil.create('div', 'info legend');
+            div.innerHTML = '<div><div class="legend-color-box" style="background-color: #ca00ff;"></div> Flood extent reduction [-]</div>';
+            return div;
+        };
+
         mangrovesLegend.addTo(map);
+        tidalmarshLegend.addTo(map);
         inunNovegLegend.addTo(map);
         inunvegLegend.addTo(map);
         inundifLegend.addTo(map);
+        inundifextentLegend.addTo(map);
 
 
 
@@ -247,6 +292,11 @@
             if (eventLayer.layer === gmw2020) {
                 updateLegendVisibility(gmw2020, mangrovesLegend);
             }
+
+            if (eventLayer.layer === tidalmarsh) {
+                updateLegendVisibility(tidalmarsh, tidalmarshLegend);
+            }
+
             if (eventLayer.layer === inun_noveg_rp0100) {
                 updateLegendVisibility(inun_noveg_rp0100, inunNovegLegend);
             }
@@ -256,6 +306,9 @@
             if (eventLayer.layer === inun_dif_rp0100) {
                 updateLegendVisibility(inun_dif_rp0100, inundifLegend);
             }
+            if (eventLayer.layer === inun_dif_extent_rp0100) {
+                updateLegendVisibility(inun_dif_extent_rp0100, inundifextentLegend);
+            }            
 
         });
 
@@ -263,6 +316,9 @@
             if (eventLayer.layer === gmw2020) {
                 updateLegendVisibility(gmw2020, mangrovesLegend);
             }
+            if (eventLayer.layer === tidalmarsh) {
+                updateLegendVisibility(tidalmarsh, tidalmarshLegend);
+            }
             if (eventLayer.layer === inun_noveg_rp0100) {
                 updateLegendVisibility(inun_noveg_rp0100, inunNovegLegend);
             }
@@ -272,13 +328,18 @@
             if (eventLayer.layer === inun_dif_rp0100) {
                 updateLegendVisibility(inun_dif_rp0100, inundifLegend);
             }
+            if (eventLayer.layer === inun_dif_extent_rp0100) {
+                updateLegendVisibility(inun_dif_extent_rp0100, inundifextentLegend);
+            }               
 
         });
 
         updateLegendVisibility(gmw2020, mangrovesLegend);
+        updateLegendVisibility(tidalmarsh, tidalmarshLegend);
         updateLegendVisibility(inun_noveg_rp0100, inunNovegLegend);
         updateLegendVisibility(inun_veg_rp0100, inunvegLegend);
         updateLegendVisibility(inun_dif_rp0100, inundifLegend);
+        updateLegendVisibility(inun_dif_extent_rp0100, inundifextentLegend);
 
 
    
