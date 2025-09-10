@@ -35,14 +35,14 @@
             position: relative;
             display: inline-block;
             margin-right: 5px;
-            
+
         }
         .rotated-label {
             position: absolute;
             right: -60px; /* Adjusts distance of the label to the right */
             top: 50%;
             transform: rotate(-90deg) translateY(-50%);
-            white-space: nowrap; 
+            white-space: nowrap;
             font-size:14px
         }
 
@@ -124,14 +124,14 @@
             format: 'image/png',
             version: '1.1.0',
             transparent: true
-        });    
-        
+        });
+
         var inun_dif_rp0100 = new L.tileLayer.wms("https://nl2120.openearth.nl/geoserver/vincarr/wms", {
             layers: '03_inundation_depth_dif',
             format: 'image/png',
             version: '1.1.0',
             transparent: true
-        });        
+        });
 
 
         var inun_dif_extent_rp0100 = new L.tileLayer.wms("https://nl2120.openearth.nl/geoserver/vincarr/wms", {
@@ -139,12 +139,28 @@
             format: 'image/png',
             version: '1.1.0',
             transparent: true
-        }); 
+        });
 
 
+		fetch("https://s3.deltares.nl/mangrove-potential/v18/rp0100/coast_inun_depth_cog.tif")
+			.then(response => response.arrayBuffer())
+			.then(arrayBuffer => parseGeoraster(arrayBuffer))
+			.then(georaster => {
+				console.log("Georaster loaded:", georaster);
+
+			var layer_minio = new GeoRasterLayer({
+				georaster: georaster,
+				opacity: 0.7,
+				resolution: 256,
+				pixelValuesToColorFn: values => {
+				let val = values[0];
+				if (val == 0 || isNaN(val)) return null;
+				if (val < 0.5) return "blue"
+				if (val < 1.0) return "yellow"
+				return "red";
+			});
 
 
-        
 
 
 
@@ -172,7 +188,7 @@
 
         ctl.addTo(map).collapseTree().expandSelected();
 
-   
+
         var overlays = {
             label: "<span style='font-size: 14px;'>Map Layers</span>",
             children: [
@@ -190,7 +206,8 @@
                         {label: "<span style='font-size: 12px;'>Flood depth (noveg)</span>", layer: inun_noveg_rp0100},
                         {label: "<span style='font-size: 12px;'>Flood depth (veg)</span>", layer: inun_veg_rp0100},
                         {label: "<span style='font-size: 12px;'>Flood depth difference</span>", layer: inun_dif_rp0100},
-                        {label: "<span style='font-size: 12px;'>Flood extent difference</span>", layer: inun_dif_extent_rp0100}
+                        {label: "<span style='font-size: 12px;'>Flood extent difference</span>", layer: inun_dif_extent_rp0100},
+                        {label: "<span style='font-size: 12px;'>Flood v2</span>", layer: layer_minio}
                     ]
                 }
             ]
@@ -199,7 +216,7 @@
 
         ctl.setOverlayTree(overlays).collapseTree(false).expandSelected(true);
 
-    
+
 
         // Initial layer setup: Add layers to map initially (for testing or default visibility)
         tidalmarsh.addTo(map);
@@ -311,7 +328,7 @@
             }
             if (eventLayer.layer === inun_dif_extent_rp0100) {
                 updateLegendVisibility(inun_dif_extent_rp0100, inundifextentLegend);
-            }            
+            }
 
         });
 
@@ -333,7 +350,7 @@
             }
             if (eventLayer.layer === inun_dif_extent_rp0100) {
                 updateLegendVisibility(inun_dif_extent_rp0100, inundifextentLegend);
-            }               
+            }
 
         });
 
@@ -345,7 +362,7 @@
         updateLegendVisibility(inun_dif_extent_rp0100, inundifextentLegend);
 
 
-   
+
     </script>
 </body>
 
