@@ -86,11 +86,6 @@
             position: 'bottomright'
         }).addTo(map);
 
-        // var precipitation = new L.tileLayer.wms("https://mesonet.agron.iastate.edu/cgi-bin/wms/us/mrms_nn.cgi?", {
-        //     layers: 'mrms_p24h',
-        //     format: 'image/png',
-        //     transparent: true
-        // });
 
         // Global Mangrove Watch layer
         var gmw2020 = new L.tileLayer.wms("https://nl2120.openearth.nl/geoserver/landscape/wms", {
@@ -179,7 +174,6 @@
                 {
                     label: "<span style='font-size: 14px;'><b>Coastal Wetland cover</b></span>",
                     children: [
-                        // {label: "<span style='font-size: 12px;'>Precipitation</span>", layer: precipitation},
                         {label: "<span style='font-size: 12px;'>Tidal marshes</span>", layer: tidalmarsh},
                         {label: "<span style='font-size: 12px;'>Mangroves</span>", layer: gmw2020},
                     ]
