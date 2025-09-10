@@ -35,14 +35,14 @@
             position: relative;
             display: inline-block;
             margin-right: 5px;
-            
+
         }
         .rotated-label {
             position: absolute;
             right: -60px; /* Adjusts distance of the label to the right */
             top: 50%;
             transform: rotate(-90deg) translateY(-50%);
-            white-space: nowrap; 
+            white-space: nowrap;
             font-size:14px
         }
 
@@ -102,7 +102,7 @@
 
 
         var tidalmarsh = new L.tileLayer.wms("https://nl2120.openearth.nl/geoserver/landscape/wms", {
-            layers: 'landscape:tidal_marsh',
+            layers: 'landscape:tidal_marsh_worthington_lzw',
             format: 'image/png',
             version: '1.1.0',
             transparent: true
@@ -124,14 +124,14 @@
             format: 'image/png',
             version: '1.1.0',
             transparent: true
-        });    
-        
+        });
+
         var inun_dif_rp0100 = new L.tileLayer.wms("https://nl2120.openearth.nl/geoserver/vincarr/wms", {
             layers: '03_inundation_depth_dif',
             format: 'image/png',
             version: '1.1.0',
             transparent: true
-        });        
+        });
 
 
         var inun_dif_extent_rp0100 = new L.tileLayer.wms("https://nl2120.openearth.nl/geoserver/vincarr/wms", {
@@ -139,12 +139,12 @@
             format: 'image/png',
             version: '1.1.0',
             transparent: true
-        }); 
+        });
 
 
 
 
-        
+
 
 
 
@@ -172,7 +172,7 @@
 
         ctl.addTo(map).collapseTree().expandSelected();
 
-   
+
         var overlays = {
             label: "<span style='font-size: 14px;'>Map Layers</span>",
             children: [
@@ -199,11 +199,11 @@
 
         ctl.setOverlayTree(overlays).collapseTree(false).expandSelected(true);
 
-    
+
 
         // Initial layer setup: Add layers to map initially (for testing or default visibility)
-        tidalmarsh.addTo(map);
-        gmw2020.addTo(map); // This will add the precipitation layer by default
+        // tidalmarsh.addTo(map);
+        gmw2020.addTo(map); //
         inun_noveg_rp0100.addTo(map);
 
         // Adding Watermark
@@ -311,7 +311,7 @@
             }
             if (eventLayer.layer === inun_dif_extent_rp0100) {
                 updateLegendVisibility(inun_dif_extent_rp0100, inundifextentLegend);
-            }            
+            }
 
         });
 
@@ -333,7 +333,7 @@
             }
             if (eventLayer.layer === inun_dif_extent_rp0100) {
                 updateLegendVisibility(inun_dif_extent_rp0100, inundifextentLegend);
-            }               
+            }
 
         });
 
@@ -345,7 +345,7 @@
         updateLegendVisibility(inun_dif_extent_rp0100, inundifextentLegend);
 
 
-   
+
     </script>
 </body>
 
