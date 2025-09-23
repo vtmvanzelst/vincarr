@@ -170,7 +170,20 @@
             transparent: true
         });
 
+        //AQUACULTURE
+        var inun_aqua_rp0100_v2_0 = new L.tileLayer.wms("https://nl2120.openearth.nl/geoserver/vincarr/wms", {
+		            layers: '02_floodmap_aqua',
+		            format: 'image/png',
+		            version: '1.1.0',
+		            transparent: true
+        });
 
+        var inun_dif_rp0100_aqua_veg_v2_0 = new L.tileLayer.wms("https://nl2120.openearth.nl/geoserver/vincarr/wms", {
+            layers: '05_floodmap_dif_aqua_veg',
+            format: 'image/png',
+            version: '1.1.0',
+            transparent: true
+        });
 
 
 
@@ -221,7 +234,9 @@
                         {label: "<span style='font-size: 12px;'>Flood depth (noveg) v2</span>", layer: inun_noveg_rp0100_v2_0},
                         {label: "<span style='font-size: 12px;'>Flood depth (veg) v2</span>", layer: inun_veg_rp0100_v2_0},
                         {label: "<span style='font-size: 12px;'>Flood depth difference v2</span>", layer: inun_dif_rp0100_v2_0},
-                        {label: "<span style='font-size: 12px;'>Flood extent difference v2</span>", layer: inun_dif_extent_rp0100_v2_0}
+                        {label: "<span style='font-size: 12px;'>Flood extent difference v2</span>", layer: inun_dif_extent_rp0100_v2_0},
+                        {label: "<span style='font-size: 12px;'>Flood depth difference (aqua_veg)</span>", layer: inun_dif_rp0100_aqua_veg_v2_0}
+                        {label: "<span style='font-size: 12px;'>Flood depth (aqua)</span>", layer: inun_aqua_rp0100_v2_0},
                     ]
                 }
             ]
