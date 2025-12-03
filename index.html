@@ -105,40 +105,6 @@
 
 
         // VINCARR layers
-        // RP0100
-        // no veg depth
-        var inun_noveg_rp0100 = new L.tileLayer.wms("https://nl2120.openearth.nl/geoserver/vincarr/wms", {
-            layers: '02_inundation_depth_without_vegetation',
-            format: 'image/png',
-            version: '1.1.0',
-            transparent: true
-        });
-
-        var inun_veg_rp0100 = new L.tileLayer.wms("https://nl2120.openearth.nl/geoserver/vincarr/wms", {
-            layers: '01_inundation_depth_with_vegetation',
-            format: 'image/png',
-            version: '1.1.0',
-            transparent: true
-        });
-
-        var inun_dif_rp0100 = new L.tileLayer.wms("https://nl2120.openearth.nl/geoserver/vincarr/wms", {
-            layers: '03_inundation_depth_dif',
-            format: 'image/png',
-            version: '1.1.0',
-            transparent: true
-        });
-
-
-        var inun_dif_extent_rp0100 = new L.tileLayer.wms("https://nl2120.openearth.nl/geoserver/vincarr/wms", {
-            layers: '05_inundation_depth_dif_extent',
-            format: 'image/png',
-            version: '1.1.0',
-            transparent: true
-        });
-
-
-
-
 
         // V2.0
         var inun_noveg_rp0100_v2_0 = new L.tileLayer.wms("https://nl2120.openearth.nl/geoserver/vincarr/wms", {
@@ -233,14 +199,10 @@
                 {
                     label: "<span style='font-size: 14px;'><b>Flood maps (RP100)</b></span>",
                     children: [
-                        {label: "<span style='font-size: 12px;'>Flood depth (noveg)</span>", layer: inun_noveg_rp0100},
-                        {label: "<span style='font-size: 12px;'>Flood depth (veg)</span>", layer: inun_veg_rp0100},
-                        {label: "<span style='font-size: 12px;'>Flood depth difference</span>", layer: inun_dif_rp0100},
-                        {label: "<span style='font-size: 12px;'>Flood extent difference</span>", layer: inun_dif_extent_rp0100},
-                        {label: "<span style='font-size: 12px;'>Flood depth (noveg) v2</span>", layer: inun_noveg_rp0100_v2_0},
-                        {label: "<span style='font-size: 12px;'>Flood depth (veg) v2</span>", layer: inun_veg_rp0100_v2_0},
-                        {label: "<span style='font-size: 12px;'>Flood depth difference v2</span>", layer: inun_dif_rp0100_v2_0},
-                        {label: "<span style='font-size: 12px;'>Flood extent difference v2</span>", layer: inun_dif_extent_rp0100_v2_0},
+                        {label: "<span style='font-size: 12px;'>Flood depth (noveg)</span>", layer: inun_noveg_rp0100_v2_0},
+                        {label: "<span style='font-size: 12px;'>Flood depth (veg)</span>", layer: inun_veg_rp0100_v2_0},
+                        {label: "<span style='font-size: 12px;'>Flood depth difference</span>", layer: inun_dif_rp0100_v2_0},
+                        {label: "<span style='font-size: 12px;'>Flood extent difference</span>", layer: inun_dif_extent_rp0100_v2_0},
                         {label: "<span style='font-size: 12px;'>Flood depth (aqua)</span>", layer: inun_aqua_rp0100_v2_0},
                         {label: "<span style='font-size: 12px;'>Flood depth difference (aqua_veg)</span>", layer: inun_dif_rp0100_aqua_veg_v2_0},
                         {label: "<span style='font-size: 12px;'>Flood extent difference (aqua_veg)</span>", layer: inun_dif_extent_rp0100_aqua_veg_v2_0}
@@ -257,7 +219,7 @@
         // Initial layer setup: Add layers to map initially (for testing or default visibility)
         // tidalmarsh.addTo(map);
         gmw2020.addTo(map); //
-        inun_noveg_rp0100.addTo(map);
+        inun_noveg_rp0100_v2_0.addTo(map);
 
         // Adding Watermark
         L.Control.Watermark = L.Control.extend({
@@ -302,21 +264,21 @@
         var inunNovegLegend = L.control({ position: 'bottomright' });
         inunNovegLegend.onAdd = function (map) {
             var div = L.DomUtil.create('div', 'info legend');
-            div.innerHTML = '<img src="https://nl2120.openearth.nl/geoserver/vincarr/wms?REQUEST=GetLegendGraphic&VERSION=1.1.0&FORMAT=image/png&LAYER=02_inundation_depth_without_vegetation" alt="Legend"> <div class="rotated-label">Flood depth (noveg) [m]</div>'
+            div.innerHTML = '<img src="https://nl2120.openearth.nl/geoserver/vincarr/wms?REQUEST=GetLegendGraphic&VERSION=1.1.0&FORMAT=image/png&LAYER=inun_noveg_rp0100_v2_0" alt="Legend"> <div class="rotated-label">Flood depth (noveg) [m]</div>'
             return div;
         };
 
         var inunvegLegend = L.control({ position: 'bottomright' });
         inunvegLegend.onAdd = function (map) {
             var div = L.DomUtil.create('div', 'info legend');
-            div.innerHTML = '<img src="https://nl2120.openearth.nl/geoserver/vincarr/wms?REQUEST=GetLegendGraphic&VERSION=1.1.0&FORMAT=image/png&LAYER=01_inundation_depth_with_vegetation" alt="Legend"> <div class="rotated-label">Flood depth (veg) [m]</div>'
+            div.innerHTML = '<img src="https://nl2120.openearth.nl/geoserver/vincarr/wms?REQUEST=GetLegendGraphic&VERSION=1.1.0&FORMAT=image/png&LAYER=inun_veg_rp0100_v2_0" alt="Legend"> <div class="rotated-label">Flood depth (veg) [m]</div>'
             return div;
         };
 
         var inundifLegend = L.control({ position: 'bottomright' });
         inundifLegend.onAdd = function (map) {
             var div = L.DomUtil.create('div', 'info legend');
-            div.innerHTML = '<img src="https://nl2120.openearth.nl/geoserver/vincarr/wms?REQUEST=GetLegendGraphic&VERSION=1.1.0&FORMAT=image/png&LAYER=03_inundation_depth_dif" alt="Legend"> <div class="rotated-label">Flood depth difference [m]</div>'
+            div.innerHTML = '<img src="https://nl2120.openearth.nl/geoserver/vincarr/wms?REQUEST=GetLegendGraphic&VERSION=1.1.0&FORMAT=image/png&LAYER=inun_dif_rp0100_v2_0" alt="Legend"> <div class="rotated-label">Flood depth difference [m]</div>'
             return div;
         };
 
@@ -353,17 +315,17 @@
                 updateLegendVisibility(tidalmarsh, tidalmarshLegend);
             }
 
-            if (eventLayer.layer === inun_noveg_rp0100) {
-                updateLegendVisibility(inun_noveg_rp0100, inunNovegLegend);
+            if (eventLayer.layer === inun_noveg_rp0100_v2_0) {
+                updateLegendVisibility(inun_noveg_rp0100_v2_0, inunNovegLegend);
             }
-            if (eventLayer.layer === inun_veg_rp0100) {
-                updateLegendVisibility(inun_veg_rp0100, inunvegLegend);
+            if (eventLayer.layer === inun_veg_rp0100_v2_0) {
+                updateLegendVisibility(inun_veg_rp0100_v2_0, inunvegLegend);
             }
-            if (eventLayer.layer === inun_dif_rp0100) {
-                updateLegendVisibility(inun_dif_rp0100, inundifLegend);
+            if (eventLayer.layer === inun_dif_rp0100_v2_0) {
+                updateLegendVisibility(inun_dif_rp0100_v2_0, inundifLegend);
             }
-            if (eventLayer.layer === inun_dif_extent_rp0100) {
-                updateLegendVisibility(inun_dif_extent_rp0100, inundifextentLegend);
+            if (eventLayer.layer === inun_dif_extent_rp0100_v2_0) {
+                updateLegendVisibility(inun_dif_extent_rp0100_v2_0, inundifextentLegend);
             }
 
         });
@@ -375,27 +337,27 @@
             if (eventLayer.layer === tidalmarsh) {
                 updateLegendVisibility(tidalmarsh, tidalmarshLegend);
             }
-            if (eventLayer.layer === inun_noveg_rp0100) {
-                updateLegendVisibility(inun_noveg_rp0100, inunNovegLegend);
+            if (eventLayer.layer === inun_noveg_rp0100_v2_0) {
+                updateLegendVisibility(inun_noveg_rp0100_v2_0, inunNovegLegend);
             }
-            if (eventLayer.layer === inun_veg_rp0100) {
-                updateLegendVisibility(inun_veg_rp0100, inunvegLegend);
+            if (eventLayer.layer === inun_veg_rp0100_v2_0) {
+                updateLegendVisibility(inun_veg_rp0100_v2_0, inunvegLegend);
             }
-            if (eventLayer.layer === inun_dif_rp0100) {
-                updateLegendVisibility(inun_dif_rp0100, inundifLegend);
+            if (eventLayer.layer === inun_dif_rp0100_v2_0) {
+                updateLegendVisibility(inun_dif_rp0100_v2_0, inundifLegend);
             }
-            if (eventLayer.layer === inun_dif_extent_rp0100) {
-                updateLegendVisibility(inun_dif_extent_rp0100, inundifextentLegend);
+            if (eventLayer.layer === inun_dif_extent_rp0100_v2_0) {
+                updateLegendVisibility(inun_dif_extent_rp0100_v2_0, inundifextentLegend);
             }
 
         });
 
         updateLegendVisibility(gmw2020, mangrovesLegend);
         updateLegendVisibility(tidalmarsh, tidalmarshLegend);
-        updateLegendVisibility(inun_noveg_rp0100, inunNovegLegend);
-        updateLegendVisibility(inun_veg_rp0100, inunvegLegend);
-        updateLegendVisibility(inun_dif_rp0100, inundifLegend);
-        updateLegendVisibility(inun_dif_extent_rp0100, inundifextentLegend);
+        updateLegendVisibility(inun_noveg_rp0100_v2_0, inunNovegLegend);
+        updateLegendVisibility(inun_veg_rp0100_v2_0, inunvegLegend);
+        updateLegendVisibility(inun_dif_rp0100_v2_0, inundifLegend);
+        updateLegendVisibility(inun_dif_extent_rp0100_v2_0, inundifextentLegend);
 
 
 
