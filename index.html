@@ -264,21 +264,21 @@
         var inunNovegLegend = L.control({ position: 'bottomright' });
         inunNovegLegend.onAdd = function (map) {
             var div = L.DomUtil.create('div', 'info legend');
-            div.innerHTML = '<img src="https://nl2120.openearth.nl/geoserver/vincarr/wms?REQUEST=GetLegendGraphic&VERSION=1.1.0&FORMAT=image/png&LAYER=inun_noveg_rp0100_v2_0" alt="Legend"> <div class="rotated-label">Flood depth (noveg) [m]</div>'
+            div.innerHTML = '<img src="https://nl2120.openearth.nl/geoserver/vincarr/wms?REQUEST=GetLegendGraphic&VERSION=1.1.0&FORMAT=image/png&LAYER=00_floodmap_noveg" alt="Legend"> <div class="rotated-label">Flood depth (noveg) [m]</div>'
             return div;
         };
 
         var inunvegLegend = L.control({ position: 'bottomright' });
         inunvegLegend.onAdd = function (map) {
             var div = L.DomUtil.create('div', 'info legend');
-            div.innerHTML = '<img src="https://nl2120.openearth.nl/geoserver/vincarr/wms?REQUEST=GetLegendGraphic&VERSION=1.1.0&FORMAT=image/png&LAYER=inun_veg_rp0100_v2_0" alt="Legend"> <div class="rotated-label">Flood depth (veg) [m]</div>'
+            div.innerHTML = '<img src="https://nl2120.openearth.nl/geoserver/vincarr/wms?REQUEST=GetLegendGraphic&VERSION=1.1.0&FORMAT=image/png&LAYER=01_floodmap_veg" alt="Legend"> <div class="rotated-label">Flood depth (veg) [m]</div>'
             return div;
         };
 
         var inundifLegend = L.control({ position: 'bottomright' });
         inundifLegend.onAdd = function (map) {
             var div = L.DomUtil.create('div', 'info legend');
-            div.innerHTML = '<img src="https://nl2120.openearth.nl/geoserver/vincarr/wms?REQUEST=GetLegendGraphic&VERSION=1.1.0&FORMAT=image/png&LAYER=inun_dif_rp0100_v2_0" alt="Legend"> <div class="rotated-label">Flood depth difference [m]</div>'
+            div.innerHTML = '<img src="https://nl2120.openearth.nl/geoserver/vincarr/wms?REQUEST=GetLegendGraphic&VERSION=1.1.0&FORMAT=image/png&LAYER=03_floodmap_dif_veg_noveg" alt="Legend"> <div class="rotated-label">Flood depth difference [m]</div>'
             return div;
         };
 
