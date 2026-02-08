@@ -158,6 +158,12 @@
             transparent: true
         });
 
+        var EAAP_noveg = new L.tileLayer.wms("https://nl2120.openearth.nl/geoserver/vincarr/wms", {
+            layers: 'EAAP_noveg_prot',
+            format: 'image/png',
+            version: '1.1.0',
+            transparent: true
+        });
 
 
 
@@ -207,7 +213,13 @@
                         {label: "<span style='font-size: 12px;'>Flood depth difference (aqua_veg)</span>", layer: inun_dif_rp0100_aqua_veg_v2_0},
                         {label: "<span style='font-size: 12px;'>Flood extent difference (aqua_veg)</span>", layer: inun_dif_extent_rp0100_aqua_veg_v2_0}
                     ]
-                }
+                },
+		{
+                    label: "<span style='font-size: 14px;'><b>Socio-economic</b></span>",
+                    children: [
+                        {label: "<span style='font-size: 12px;'>EAAP (noveg)</span>", layer: EAAP_noveg}
+                    ]
+		}
             ]
         };
 
