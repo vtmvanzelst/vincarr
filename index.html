@@ -372,51 +372,6 @@
         updateLegendVisibility(inun_dif_extent_rp0100_v2_0, inundifextentLegend);
 
 
-        // Function to get pixel value from the WMS layer when clicked
-        map.on('click', function (e) {
-            var lat = e.latlng.lat;
-            var lon = e.latlng.lng;
-            var activeLayer = null;
-
-            // Loop through all layers added to the map and check for active WMS layers
-            map.getLayers().forEach(function (layer) {
-                if (layer instanceof L.TileLayer.WMS && layer._map) {
-                    activeLayer = layer;  // Get the WMS layer that is currently added to the map
-                }
-            });
-
-            // If we have an active WMS layer
-            if (activeLayer) {
-                // Construct the WMS GetFeatureInfo URL
-                var wmsUrl = activeLayer._url + "?service=WMS&version=1.1.0&request=GetFeatureInfo" +
-                    "&layers=" + activeLayer.options.layers +
-                    "&query_layers=" + activeLayer.options.layers +
-                    "&srs=EPSG:4326" + // Adjust to the CRS you are using
-                    "&x=" + Math.floor(e.containerPoint.x) + 
-                    "&y=" + Math.floor(e.containerPoint.y) + 
-                    "&width=256&height=256" + 
-                    "&bbox=" + map.getBounds().toBBoxString() + 
-                    "&format=image/png";
-
-                // Perform the request to get the pixel value
-                fetch(wmsUrl)
-                    .then(response => response.text())
-                    .then(data => {
-                        // Handle the WMS response (it may be XML, image, or other)
-                        // For this example, we'll just display the response as text in a popup
-                        L.popup()
-                            .setLatLng(e.latlng)
-                            .setContent("Pixel Value from " + activeLayer.options.layers + ": " + data)
-                            .openOn(map);
-                    })
-                    .catch(error => {
-                        console.error("Error fetching WMS data:", error);
-                    });
-            } else {
-                alert("No active layer found at clicked location.");
-            }
-        });
-
 
     </script>
 </body>
