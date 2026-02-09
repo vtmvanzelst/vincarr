@@ -167,7 +167,7 @@
 
 
         //DeltaDTM
-        var delta_dtm = new L.tileLayer.wms("https://nl2120.openearth.nl/geoserver/topografie/wms", {
+        var deltadtm = new L.tileLayer.wms("https://nl2120.openearth.nl/geoserver/topografie/wms", {
             layers: 'deltadtm',
             format: 'image/png',
             version: '1.1.0',
@@ -207,10 +207,11 @@
             label: "<span style='font-size: 14px;'>Map Layers</span>",
             children: [
                 {
-                    label: "<span style='font-size: 14px;'><b>Coastal Wetland cover</b></span>",
+                    label: "<span style='font-size: 14px;'><b>Coastal maps</b></span>",
                     children: [
                         {label: "<span style='font-size: 12px;'>Tidal marshes</span>", layer: tidalmarsh},
                         {label: "<span style='font-size: 12px;'>Mangroves</span>", layer: gmw2020},
+                        {label: "<span style='font-size: 12px;'>DeltaDTM</span>", layer: deltadtm},
                     ]
                 },
                 {
@@ -313,7 +314,7 @@
         };
 
         var deltadtmLegend = L.control({ position: 'bottomright' });
-        inundifextentLegend.onAdd = function (map) {
+        deltadtmLegend.onAdd = function (map) {
             var div = L.DomUtil.create('div', 'info legend');
             div.innerHTML = '<img src="https://nl2120.openearth.nl/geoserver/topografie/wms?REQUEST=GetLegendGraphic&VERSION=1.1.0&FORMAT=image/png&LAYER=deltadtm" alt="Legend"> <div class="rotated-label">Elevation [m+MSL]</div>'
             return div;
