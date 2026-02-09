@@ -166,6 +166,17 @@
         });
 
 
+        //DeltaDTM
+        var delta_dtm = new L.tileLayer.wms("https://nl2120.openearth.nl/geoserver/topografie/wms", {
+            layers: 'deltadtm',
+            format: 'image/png',
+            version: '1.1.0',
+            transparent: true
+        });
+
+
+
+
 
         var baseTree = {
             label: 'BaseLayers',
@@ -301,15 +312,23 @@
             return div;
         };
 
+        var deltadtmLegend = L.control({ position: 'bottomright' });
+        inundifextentLegend.onAdd = function (map) {
+            var div = L.DomUtil.create('div', 'info legend');
+            div.innerHTML = '<img src="https://nl2120.openearth.nl/geoserver/topografie/wms?REQUEST=GetLegendGraphic&VERSION=1.1.0&FORMAT=image/png&LAYER=deltadtm" alt="Legend"> <div class="rotated-label">Elevation [m+MSL]</div>'
+            return div;
+        };
+
+
         mangrovesLegend.addTo(map);
         tidalmarshLegend.addTo(map);
         inunNovegLegend.addTo(map);
         inunvegLegend.addTo(map);
         inundifLegend.addTo(map);
         inundifextentLegend.addTo(map);
+        deltadtmLegend.addTo(map);
 
-
-
+		// UPDATE LEGEND BASED ON TOGGLE
         function updateLegendVisibility(layer, legendControl) {
             if (map.hasLayer(layer)) {
                 legendControl.addTo(map);
@@ -339,6 +358,10 @@
             if (eventLayer.layer === inun_dif_extent_rp0100_v2_0) {
                 updateLegendVisibility(inun_dif_extent_rp0100_v2_0, inundifextentLegend);
             }
+            if (eventLayer.layer === deltadtm) {
+			    updateLegendVisibility(deltadtm, deltadtmLegend);
+            }
+
 
         });
 
@@ -361,6 +384,9 @@
             if (eventLayer.layer === inun_dif_extent_rp0100_v2_0) {
                 updateLegendVisibility(inun_dif_extent_rp0100_v2_0, inundifextentLegend);
             }
+            if (eventLayer.layer === deltadtm) {
+                updateLegendVisibility(deltadtm, deltadtmLegend);
+            }
 
         });
 
@@ -370,6 +396,7 @@
         updateLegendVisibility(inun_veg_rp0100_v2_0, inunvegLegend);
         updateLegendVisibility(inun_dif_rp0100_v2_0, inundifLegend);
         updateLegendVisibility(inun_dif_extent_rp0100_v2_0, inundifextentLegend);
+        updateLegendVisibility(deltadtm, deltadtmLegend);
 
 
 
